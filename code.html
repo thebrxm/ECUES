@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contador Digital ECUES</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+            position: relative; /* para botão fixo */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .patient-counter {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #4CAF50;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2E7D32;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .counter-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .counter-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .counter-item.highlighted {
+            border-color: #4CAF50;
+            background: #f1f8e9;
+        }
+
+        .counter-label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .counter-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .counter-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .counter-btn.plus {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .counter-btn.plus:hover {
+            background: #45a049;
+            transform: scale(1.1);
+        }
+
+        .counter-btn.minus {
+            background: #f44336;
+            color: white;
+        }
+
+        .counter-btn.minus:hover {
+            background: #da190b;
+            transform: scale(1.1);
+        }
+
+        .counter-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .counter-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2E7D32;
+            min-width: 30px;
+        }
+
+        .hospital-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            margin-bottom: 10px;
+        }
+
+        .hospital-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hospital-select {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .add-hospital-btn {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .add-hospital-btn:hover {
+            background: #1976D2;
+        }
+
+        .remove-hospital-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .remove-hospital-btn:hover {
+            background: #da190b;
+        }
+
+        .textarea-field {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+            transition: border-color 0.3s;
+        }
+
+        .textarea-field:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .alert {
+            background: #ffeb3b;
+            color: #f57f17;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+        }
+
+        .info-alert {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+        }
+
+        /* Botao RESET no canto superior direito */
+        #resetBtn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff5722;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 87, 34, 0.6);
+            z-index: 1000;
+            transition: background 0.3s;
+            user-select: none;
+        }
+
+        #resetBtn:hover {
+            background: #e64a19;
+        }
+
+        /* Novos botões Copiar resumen e Enviar WhatsApp */
+        #copySummaryBtn, #sendWhatsappBtn {
+            position: fixed;
+            right: 20px;
+            background: #2196F3;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(33, 150, 243, 0.6);
+            z-index: 1000;
+            transition: background 0.3s;
+            user-select: none;
+            width: 180px; /* Aumentado para acomodar ícone e texto */
+            display: inline-flex; /* Para alinhar ícone e texto */
+            align-items: center;
+            justify-content: center;
+            gap: 6px; /* Espaçamento entre ícone e texto */
+        }
+
+        #copySummaryBtn {
+            top: 60px;
+        }
+
+        #copySummaryBtn:hover {
+            background: #1976D2;
+        }
+
+        #sendWhatsappBtn {
+            top: 100px; /* abaixo do copiar */
+        }
+
+        #sendWhatsappBtn:hover {
+            background: #1976D2;
+        }
+
+        /* Estilo para os campos METHANE */
+.methane-field-group {
+  display: flex;
+  flex-direction: column; /* empilha verticalmente */
+  gap: 10px;
+  margin-top: 15px;
+}
+.methane-field-item {
+  display: flex;
+  flex-direction: row; /* label e input lado a lado */
+  align-items: center;
+  gap: 10px;
+}
+.methane-field-item label {
+  font-weight: bold;
+  color: #555;
+  font-size: 1.1em;
+  width: 20px; /* largura fixa para alinhar as letras */
+  text-align: center;
+}
+.methane-field-item input {
+  flex: 1; /* ocupa o espaço restante */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .counter-group {
+                grid-template-columns: 1fr;
+            }
+
+            .hospital-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hospital-select {
+                min-width: auto;
+            }
+
+            #resetBtn {
+                top: 10px;
+                right: 10px;
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            #copySummaryBtn, #sendWhatsappBtn {
+                top: auto;
+                bottom: 80px;
+                right: 10px;
+                width: auto;
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+            #copySummaryBtn {
+                bottom: 120px;
+            }
+            #sendWhatsappBtn {
+                bottom: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Botão RESET fixo -->
+    <button id="resetBtn" title="Reiniciar todos os dados">RESET</button>
+    <!-- Botões novos com ícones SVG -->
+    <button id="copySummaryBtn" title="Copiar resumen" aria-label="Copiar resumen">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M10 1.5H3a1 1 0 0 0-1 1V12a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2.5a1 1 0 0 0-1-1zM3 0a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H3z"/>
+            <path d="M13 4.5v9a.5.5 0 0 1-.5.5H6a.5.5 0 0 1 0-1h6.5v-8a.5.5 0 0 1 1 0z"/>
+        </svg>
+        Copiar resumen
+    </button>
+    <button id="sendWhatsappBtn" title="Enviar vía WhatsApp" aria-label="Enviar vía WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="color:#25D366;">
+            <path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.37 0 0 5.37 0 12a11.94 11.94 0 0 0 3.48 8.52l-1.8 6.6 6.6-1.8A11.94 11.94 0 0 0 24 12c0-3.2-1.25-6.2-3.48-8.52zM12 21.5a9.5 9.5 0 0 1-4.8-1.3l-.35-.2-3.1.85.85-3.1-.2-.35A9.5 9.5 0 1 1 12 21.5zm5.3-7.1c-.3-.15-1.75-.85-2-.95-.25-.1-.45-.15-.65.15s-.75.95-.9 1.15c-.15.2-.3.25-.55.1-.3-.15-1.25-.45-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.15-.3 0-.45.1-.6.1-.15.25-.3.4-.45.15-.15.2-.25.3-.4.1-.15.05-.3 0-.45-.05-.15-.65-1.55-.9-2.15-.25-.55-.5-.5-.65-.5h-.55c-.15 0-.4.05-.6.3s-.8.8-.8 1.95.85 2.25.95 2.4c.1.15 1.65 2.5 4 3.5 2.35 1 2.35.65 2.75.6.4-.05 1.3-.55 1.5-1.1.2-.55.2-1 .15-1.1-.05-.1-.2-.15-.45-.3z"/>
+        </svg>
+        Enviar WhatsApp
+    </button>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="icon-512.png" alt="Logo oficial ECUES" />
+            </div>
+            <div class="patient-counter">
+                Hasta ahora <span id="totalPatients">0</span> pacientes
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="alert" id="alert"></div>
+            <div class="info-alert" id="infoAlert"></div>
+
+<!-- Botão para mostrar/ocultar METHANE -->
+<div style="text-align:center; margin-bottom: 15px;">
+    <button id="toggleMethaneBtn" type="button" style="background:#4CAF50; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:bold;">
+        METHANE
+    </button>
+</div>
+
+<!-- METHANE oculto inicialmente -->
+<div class="section" id="methaneSection" style="display:none;">
+  <div class="section-title">METHANE</div>
+  <div class="methane-field-group">
+    <div class="methane-field-item">
+      <label for="methaneM">M:</label>
+      <input type="text" id="methaneM" class="input-field" placeholder="Ej.: Sí/No" />
+    </div>
+    <div class="methane-field-item">
+      <label for="methaneE">E:</label>
+      <input type="text" id="methaneE" class="input-field" placeholder="Ej.: Dirección exacta" />
+    </div>
+    <div class="methane-field-item">
+      <label for="methaneT">T:</label>
+      <input type="text" id="methaneT" class="input-field" placeholder="Ej.: Incendio, explosión" />
+    </div>
+    <div class="methane-field-item">
+      <label for="methaneH">H:</label>
+      <input type="text" id="methaneH" class="input-field" placeholder="Ej.: Químicos, humo..." />
+    </div>
+    <div class="methane-field-item">
+      <label for="methaneA">A:</label>
+      <input type="text" id="methaneA" class="input-field" placeholder="Ej.: Noria" />
+    </div>
+    <div class="methane-field-item">
+      <label for="methaneN">N:</label>
+      <input type="text" id="methaneN" class="input-field" placeholder="Ej.: 5 heridos" />
+    </div>
+    <div class="methane-field-item">
+      <label for="methaneE2">E:</label>
+      <input type="text" id="methaneE2" class="input-field" placeholder="Ej.: SAME, Bomberos" />
+    </div>
+  </div>
+</div>
+
+
+            <!-- Incidente -->
+            <div class="section">
+                <div class="section-title">Incidente</div>
+                <input type="text" class="input-field" id="incidente" placeholder="Describir el incidente..." />
+            </div>
+
+            <!-- Dirección -->
+            <div class="section">
+                <div class="section-title">Dirección</div>
+                <input type="text" class="input-field" id="direccion" placeholder="Dirección del incidente..." />
+            </div>
+
+            <!-- Sexo -->
+            <div class="section">
+                <div class="section-title">Sexo</div>
+                <div class="counter-group">
+                    <div class="counter-item">
+                        <div class="counter-label">Masculino</div>
+                        <div class="counter-controls">
+                            <button class="counter-btn minus" onclick="redistributeFromSD('masculino', -1)">−</button>
+                            <span class="counter-value" id="masculino">0</span>
+                            <button class="counter-btn plus" onclick="redistributeFromSD('masculino', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="counter-item">
+                        <div class="counter-label">Femenino</div>
+                        <div class="counter-controls">
+                            <button class="counter-btn minus" onclick="redistributeFromSD('femenino', -1)">−</button>
+                            <span class="counter-value" id="femenino">0</span>
+                            <button class="counter-btn plus" onclick="redistributeFromSD('femenino', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="counter-item" id="sexoSD-item">
+                        <div class="counter-label">S/D</div>
+                        <div class="counter-controls">
+                            <button class="counter-btn minus" onclick="redistributeToSD('sexoSD', -1)">−</button>
+                            <span class="counter-value" id="sexoSD">0</span>
+                            <button class="counter-btn plus" onclick="redistributeToSD('sexoSD', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edad -->
+            <div class="section">
+                <div class="section-title">Edad</div>
+                <div class="counter-group">
+                    <div class="counter-item">
+                        <div class="counter-label">Menores</div>
+                        <div class="counter-controls">
+                            <button class="counter-btn minus" onclick="redistributeFromSD('menores', -1)">−</button>
+                            <span class="counter-value" id="menores">0</span>
+                            <button class="counter-btn plus" onclick="redistributeFromSD('menores', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="counter-item">
+                        <div class="counter-label">Mayores</div>
+                        <div class="counter-controls">
+                            <button class="counter-btn minus" onclick="redistributeFromSD('mayores', -1)">−</button>
+                            <span class="counter-value" id="mayores">0</span>
+                            <button class="counter-btn plus" onclick="redistributeFromSD('mayores', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="counter-item" id="edadSD-item">
+                        <div class="counter-label">S/D</div>
+                        <div class="counter-controls">
+                            <button class="counter-btn minus" onclick="redistributeToSD('edadSD', -1)">−</button>
+                            <span class="counter-value" id="edadSD">0</span>
+                            <button class="counter-btn plus" onclick="redistributeToSD('edadSD', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Procedimiento -->
+            <div class="section">
+                <div class="section-title">Procedimiento</div>
+                <div class="counter-group">
+                    <div class="counter-item">
+                        <div class="counter-label">Atendidos en el lugar</div>
+                        <div class="counter-controls">
+                            <button class="counter-btn minus" onclick="updatePatientCounter('atendidos', -1)">−</button>
+                            <span class="counter-value" id="atendidos">0</span>
+                            <button class="counter-btn plus" onclick="updatePatientCounter('atendidos', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="counter-item">
+                        <div class="counter-label">Trasladados</div>
+                        <div class="counter-controls">
+                            <button class="counter-btn minus" onclick="updatePatientCounter('trasladados', -1)">−</button>
+                            <span class="counter-value" id="trasladados">0</span>
+                            <button class="counter-btn plus" onclick="updatePatientCounter('trasladados', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dotación -->
+            <div class="section">
+                <div class="section-title">Dotación</div>
+                <div class="counter-group">
+                    <div class="counter-item">
+                        <div class="counter-label">Móviles</div>
+                        <div class="counter-controls">
+                            <button class="counter-btn minus" onclick="updateResourceCounter('moviles', -1)">−</button>
+                            <span class="counter-value" id="moviles">0</span>
+                            <button class="counter-btn plus" onclick="updateResourceCounter('moviles', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="counter-item">
+                        <div class="counter-label">Aéreo</div>
+                        <div class="counter-controls">
+                            <button class="counter-btn minus" onclick="updateResourceCounter('aereo', -1)">−</button>
+                            <span class="counter-value" id="aereo">0</span>
+                            <button class="counter-btn plus" onclick="updateResourceCounter('aereo', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Destino traslados -->
+            <div class="section">
+                <div class="section-title">Destino traslados (hospitales)</div>
+                <div id="hospitalsContainer">
+                    <div class="hospital-item">
+                        <div class="hospital-controls">
+                            <select class="hospital-select">
+                                <option value="">Seleccionar hospital...</option>
+                                <option value="HOSPITAL PENNA">HOSPITAL PENNA</option>
+                                <option value="HOSPITAL ARGERICH">HOSPITAL ARGERICH</option>
+                                <option value="HOSPITAL RAMOS MEJIA">HOSPITAL RAMOS MEJIA</option>
+                                <option value="HOSPITAL FERNANDEZ">HOSPITAL FERNANDEZ</option>
+                                <option value="HOSPITAL RIVADAVIA">HOSPITAL RIVADAVIA</option>
+                                <option value="HOSPITAL PIROVANO">HOSPITAL PIROVANO</option>
+                                <option value="HOSPITAL TORNU">HOSPITAL TORNU</option>
+                                <option value="HOSPITAL SANTOJANNI">HOSPITAL SANTOJANNI</option>
+                                <option value="HOSPITAL PIÑERO">HOSPITAL PIÑERO</option>
+                                <option value="HOSPITAL GRIERSON">HOSPITAL GRIERSON</option>
+                                <option value="HOSPITAL ZUBIZARRETA">HOSPITAL ZUBIZARRETA</option>
+                                <option value="HOSPITAL VELEZ SARSFIELD">HOSPITAL VELEZ SARSFIELD</option>
+                                <option value="HOSPITAL ALVAREZ">HOSPITAL ALVAREZ</option>
+                                <option value="HOSPITAL DURAND">HOSPITAL DURAND</option>
+                                <option value="HOSPITAL MUÑIZ">HOSPITAL MUÑIZ</option>
+                                <option value="HOSPITAL SANTA LUCIA">HOSPITAL SANTA LUCIA</option>
+                                <option value="HOSPITAL GUTIERREZ">HOSPITAL GUTIERREZ</option>
+                                <option value="HOSPITAL ELIZALDE">HOSPITAL ELIZALDE</option>
+                            </select>
+                            <div class="counter-controls">
+                                <button class="counter-btn minus" onclick="updateHospitalCounter(this, -1)">−</button>
+                                <span class="counter-value">0</span>
+                                <button class="counter-btn plus" onclick="updateHospitalCounter(this, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="add-hospital-btn" onclick="addHospitalRow()">+ Agregar otro destino</button>
+            </div>
+
+            <!-- Notas -->
+            <div class="section">
+                <div class="section-title">Notas</div>
+                <textarea class="textarea-field" id="notas" placeholder="Notas adicionales sobre el incidente..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        // Função principal para atualizar contadores de pacientes (atendidos/trasladados)
+        function updatePatientCounter(counterId, change) {
+            const currentValue = parseInt(document.getElementById(counterId).textContent);
+            const newValue = Math.max(0, currentValue + change);
+
+            document.getElementById(counterId).textContent = newValue;
+
+            // Se for "atendidos" ou "trasladados", atualizar S/D automaticamente nas categorias Sexo e Edad
+            if (counterId === 'atendidos' || counterId === 'trasladados') {
+                const sexoSDValue = parseInt(document.getElementById('sexoSD').textContent);
+                const edadSDValue = parseInt(document.getElementById('edadSD').textContent);
+
+                if (change > 0) {
+                    // Adicionar a S/D
+                    document.getElementById('sexoSD').textContent = sexoSDValue + change;
+                    document.getElementById('edadSD').textContent = edadSDValue + change;
+                    highlightSDFields();
+                    showInfoAlert('Paciente agregado automáticamente a S/D en categorías Sexo y Edad.');
+
+                    // Se for "trasladados" e o incremento for positivo, adicionar ao primeiro hospital
+                    if (counterId === 'trasladados') {
+                        const firstHospitalCounter = document.querySelector('#hospitalsContainer .hospital-item .counter-value');
+                        if (firstHospitalCounter) {
+                            firstHospitalCounter.textContent = parseInt(firstHospitalCounter.textContent) + 1;
+                        }
+                    }
+
+                } else if (change < 0 && currentValue > 0) {
+                    // Remover de S/D proporcionalmente
+                    const newSexoSD = Math.max(0, sexoSDValue + change);
+                    const newEdadSD = Math.max(0, edadSDValue + change);
+                    document.getElementById('sexoSD').textContent = newSexoSD;
+                    document.getElementById('edadSD').textContent = newEdadSD;
+                    showInfoAlert('Paciente retirado automáticamente de S/D em categorias Sexo e Edad.');
+
+                    // Se for "trasladados" e o decremento for negativo, remover do primeiro hospital (se houver)
+                    if (counterId === 'trasladados') {
+                        const firstHospitalCounter = document.querySelector('#hospitalsContainer .hospital-item .counter-value');
+                        if (firstHospitalCounter && parseInt(firstHospitalCounter.textContent) > 0) {
+                            firstHospitalCounter.textContent = parseInt(firstHospitalCounter.textContent) - 1;
+                        }
+                    }
+                }
+            }
+
+            updateTotalPatients();
+        }
+
+        // Redistribuir de S/D para categorias especificas
+        function redistributeFromSD(counterId, change) {
+            const currentValue = parseInt(document.getElementById(counterId).textContent);
+            const isAgeCategory = ['menores', 'mayores'].includes(counterId);
+            const isSexCategory = ['masculino', 'femenino'].includes(counterId);
+
+            if (change > 0) {
+                // Mover de S/D para categoria especifica
+                const sdField = isAgeCategory ? 'edadSD' : 'sexoSD';
+                const sdValue = parseInt(document.getElementById(sdField).textContent);
+
+                if (sdValue > 0) {
+                    document.getElementById(sdField).textContent = sdValue - 1;
+                    document.getElementById(counterId).textContent = currentValue + 1;
+                    showInfoAlert(`Paciente reclasificado de S/D a ${counterId}.`);
+                } else {
+                    showAlert(`No hay pacientes en S/D (${isAgeCategory ? 'Edad' : 'Sexo'}) para reclasificar.`);
+                }
+            } else if (change < 0 && currentValue > 0) {
+                // Devolver a S/D
+                const sdField = isAgeCategory ? 'edadSD' : 'sexoSD';
+                const sdValue = parseInt(document.getElementById(sdField).textContent);
+
+                document.getElementById(sdField).textContent = sdValue + 1;
+                document.getElementById(counterId).textContent = currentValue - 1;
+                showInfoAlert(`Paciente devuelto a S/D desde ${counterId}.`);
+            }
+
+            validateCategoryTotals();
+        }
+
+        // Manipula mudanças diretas em S/D
+        function redistributeToSD(counterId, change) {
+            const currentValue = parseInt(document.getElementById(counterId).textContent);
+
+            if (change < 0 && currentValue > 0) {
+                document.getElementById(counterId).textContent = currentValue - 1;
+                showInfoAlert('Paciente retirado de S/D. Debe especificar categoría correspondiente.');
+            } else if (change > 0) {
+                showAlert('No se puede agregar directamente a S/D. Use "Atendidos en el lugar" para agregar pacientes.');
+            }
+
+            validateCategoryTotals();
+        }
+
+        // Atualiza recursos (não afeta contagem de pacientes)
+        function updateResourceCounter(counterId, change) {
+            const currentValue = parseInt(document.getElementById(counterId).textContent);
+            const newValue = Math.max(0, currentValue + change);
+            document.getElementById(counterId).textContent = newValue;
+        }
+
+        // Atualiza total de pacientes
+        function updateTotalPatients() {
+            const atendidos = parseInt(document.getElementById('atendidos').textContent);
+            const trasladados = parseInt(document.getElementById('trasladados').textContent);
+            const total = atendidos + trasladados;
+
+            document.getElementById('totalPatients').textContent = total;
+        }
+
+        // Reseta todas categorias ao zerar total pacientes
+        function resetAllCategories() {
+            // Reset campos METHANE
+            document.getElementById('methaneM').value = '';
+            document.getElementById('methaneE').value = '';
+            document.getElementById('methaneT').value = '';
+            document.getElementById('methaneH').value = '';
+            document.getElementById('methaneA').value = '';
+            document.getElementById('methaneN').value = '';
+            document.getElementById('methaneE2').value = '';
+
+            // Reset contadores de pacientes e S/D
+            document.getElementById('atendidos').textContent = '0';
+            document.getElementById('trasladados').textContent = '0';
+            document.getElementById('masculino').textContent = '0';
+            document.getElementById('femenino').textContent = '0';
+            document.getElementById('sexoSD').textContent = '0';
+            document.getElementById('menores').textContent = '0';
+            document.getElementById('mayores').textContent = '0';
+            document.getElementById('edadSD').textContent = '0';
+
+            // Reset contadores de recursos
+            document.getElementById('moviles').textContent = '0';
+            document.getElementById('aereo').textContent = '0';
+
+            // Reset contadores dos hospitais e seleção
+            document.querySelectorAll('#hospitalsContainer .hospital-item').forEach(hospitalItem => {
+                hospitalItem.querySelector('.hospital-select').value = '';
+                hospitalItem.querySelector('.counter-value').textContent = '0';
+            });
+
+            // Reset inputs texto
+            document.getElementById('incidente').value = '';
+            document.getElementById('direccion').value = '';
+            document.getElementById('notas').value = '';
+
+            // Esconder alertas
+            document.getElementById('alert').style.display = 'none';
+            document.getElementById('infoAlert').style.display = 'none';
+        }
+
+        // Valida que os totais das categorias coincidam
+        function validateCategoryTotals() {
+            const sexoTotal =
+                parseInt(document.getElementById('masculino').textContent) +
+                parseInt(document.getElementById('femenino').textContent) +
+                parseInt(document.getElementById('sexoSD').textContent);
+
+            const edadTotal =
+                parseInt(document.getElementById('menores').textContent) +
+                parseInt(document.getElementById('mayores').textContent) +
+                parseInt(document.getElementById('edadSD').textContent);
+
+            const patientTotal =
+                parseInt(document.getElementById('atendidos').textContent) +
+                parseInt(document.getElementById('trasladados').textContent);
+
+            if (sexoTotal !== patientTotal || edadTotal !== patientTotal) {
+                showAlert('Las categorías no coinciden con el total de pacientes. Verifique la distribución.');
+            }
+        }
+
+        // Destaca os campos S/D temporariamente
+        function highlightSDFields() {
+            const sexoSDItem = document.getElementById('sexoSD-item');
+            const edadSDItem = document.getElementById('edadSD-item');
+
+            sexoSDItem.classList.add('highlighted');
+            edadSDItem.classList.add('highlighted');
+
+            setTimeout(() => {
+                sexoSDItem.classList.remove('highlighted');
+                edadSDItem.classList.remove('highlighted');
+            }, 3000);
+        }
+
+        // Mostrar alertas
+        function showAlert(message) {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+
+        function showInfoAlert(message) {
+            const infoAlert = document.getElementById('infoAlert');
+            infoAlert.textContent = message;
+            infoAlert.style.display = 'block';
+            setTimeout(() => {
+                infoAlert.style.display = 'none';
+            }, 4000);
+        }
+
+        // Manipulação de hospitais
+        function addHospitalRow() {
+            const container = document.getElementById('hospitalsContainer');
+            const hospitalItem = document.createElement('div');
+            hospitalItem.className = 'hospital-item';
+
+            hospitalItem.innerHTML = `
+                <div class="hospital-controls">
+                    <select class="hospital-select">
+                        <option value="">Seleccionar hospital...</option>
+                        <option value="HOSPITAL PENNA">HOSPITAL PENNA</option>
+                        <option value="HOSPITAL ARGERICH">HOSPITAL ARGERICH</option>
+                        <option value="HOSPITAL RAMOS MEJIA">HOSPITAL RAMOS MEJIA</option>
+                        <option value="HOSPITAL FERNANDEZ">HOSPITAL FERNANDEZ</option>
+                        <option value="HOSPITAL RIVADAVIA">HOSPITAL RIVADAVIA</option>
+                        <option value="HOSPITAL PIROVANO">HOSPITAL PIROVANO</option>
+                        <option value="HOSPITAL TORNU">HOSPITAL TORNU</option>
+                        <option value="HOSPITAL SANTOJANNI">HOSPITAL SANTOJANNI</option>
+                        <option value="HOSPITAL PIÑERO">HOSPITAL PIÑERO</option>
+                        <option value="HOSPITAL GRIERSON">HOSPITAL GRIERSON</option>
+                        <option value="HOSPITAL ZUBIZARRETA">HOSPITAL ZUBIZARRETA</option>
+                        <option value="HOSPITAL VELEZ SARSFIELD">HOSPITAL VELEZ SARSFIELD</option>
+                        <option value="HOSPITAL ALVAREZ">HOSPITAL ALVAREZ</option>
+                        <option value="HOSPITAL DURAND">HOSPITAL DURAND</option>
+                        <option value="HOSPITAL MUÑIZ">HOSPITAL MUÑIZ</option>
+                        <option value="HOSPITAL SANTA LUCIA">HOSPITAL SANTA LUCIA</option>
+                        <option value="HOSPITAL GUTIERREZ">HOSPITAL GUTIERREZ</option>
+                        <option value="HOSPITAL ELIZALDE">HOSPITAL ELIZALDE</option>
+                    </select>
+                    <div class="counter-controls">
+                        <button class="counter-btn minus" onclick="updateHospitalCounter(this, -1)">−</button>
+                        <span class="counter-value">0</span>
+                        <button class="counter-btn plus" onclick="updateHospitalCounter(this, 1)">+</button>
+                    </div>
+                    <button class="remove-hospital-btn" onclick="removeHospitalRow(this)">Eliminar</button>
+                </div>
+            `;
+
+            container.appendChild(hospitalItem);
+        }
+
+        function removeHospitalRow(button) {
+            const hospitalItem = button.closest('.hospital-item');
+            hospitalItem.remove();
+        }
+
+        function updateHospitalCounter(button, change) {
+            const counterElement = button.parentElement.querySelector('.counter-value');
+            const currentValue = parseInt(counterElement.textContent);
+            const newValue = Math.max(0, currentValue + change);
+
+            const trasladados = parseInt(document.getElementById('trasladados').textContent);
+            const allHospitalCounters = document.querySelectorAll('#hospitalsContainer .counter-value');
+            let hospitalTotal = 0;
+
+            allHospitalCounters.forEach(counter => {
+                if (counter !== counterElement) {
+                    hospitalTotal += parseInt(counter.textContent);
+                }
+            });
+
+            if (newValue + hospitalTotal > trasladados && change > 0) {
+                showAlert('No se pueden asignar más pacientes a hospitales que el total de trasladados.');
+                return;
+            }
+
+            counterElement.textContent = newValue;
+        }
+
+        // Botão RESET funcionalidade
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (confirm('Tem certeza que deseja reiniciar todos os dados e começar do zero?')) {
+                resetAllCategories();
+                updateTotalPatients(); // Atualiza o total de pacientes exibido no cabeçalho
+                showInfoAlert('Aplicativo reiniciado.');
+            }
+        });
+
+        // Inicializar a aplicação
+        document.addEventListener('DOMContentLoaded', function () {
+            updateTotalPatients();
+        });
+
+// Função para gerar o resumo formatado
+function generateSummary() {
+    const methaneFields = [
+        {label: 'M', value: document.getElementById('methaneM').value.trim()},
+        {label: 'E', value: document.getElementById('methaneE').value.trim()},
+        {label: 'T', value: document.getElementById('methaneT').value.trim()},
+        {label: 'H', value: document.getElementById('methaneH').value.trim()},
+        {label: 'A', value: document.getElementById('methaneA').value.trim()},
+        {label: 'N', value: document.getElementById('methaneN').value.trim()},
+        {label: 'E', value: document.getElementById('methaneE2').value.trim()}
+    ];
+
+    // Verifica se algum campo METHANE está preenchido
+    const methaneFilled = methaneFields.some(field => field.value !== '');
+
+    let methaneResumen = '';
+    if (methaneFilled) {
+        methaneResumen = 'METHANE:\n';
+        methaneFields.forEach(field => {
+            methaneResumen += `${field.label}: ${field.value || 'N/A'}\n`;
+        });
+        methaneResumen += '\n';
+    }
+
+    // Os demais campos do resumo continuam iguais, mas substitua a parte METHANE pelo methaneResumen
+
+    const incidente = document.getElementById('incidente').value.trim() || 'N/A';
+    const direccion = document.getElementById('direccion').value.trim() || 'N/A';
+    const notas = document.getElementById('notas').value.trim() || 'N/A';
+
+    const masculino = document.getElementById('masculino').textContent;
+    const femenino = document.getElementById('femenino').textContent;
+    const sexoSD = document.getElementById('sexoSD').textContent;
+
+    const menores = document.getElementById('menores').textContent;
+    const mayores = document.getElementById('mayores').textContent;
+    const edadSD = document.getElementById('edadSD').textContent;
+
+    const atendidos = document.getElementById('atendidos').textContent;
+    const trasladados = document.getElementById('trasladados').textContent;
+
+    const hospitalItems = document.querySelectorAll('#hospitalsContainer .hospital-item');
+    let hospitalesResumen = '';
+    hospitalItems.forEach(item => {
+        const select = item.querySelector('.hospital-select');
+        const count = item.querySelector('.counter-value').textContent;
+        if (select.value && parseInt(count) > 0) {
+            hospitalesResumen += `- ${select.value}: ${count}\n`;
+        }
+    });
+    if (!hospitalesResumen) hospitalesResumen = 'Ninguno';
+
+    const moviles = document.getElementById('moviles').textContent;
+    const aereo = document.getElementById('aereo').textContent;
+
+    const resumen = 
+`${methaneResumen}Incidente: ${incidente}
+Dirección: ${direccion}
+
+Pacientes:
+- Total atendidos: ${atendidos}
+- Total trasladados: ${trasladados}
+Destino traslados (hospitales):
+${hospitalesResumen}
+
+Sexo:
+- Masculino: ${masculino}
+- Femenino: ${femenino}
+- S/D: ${sexoSD}
+
+Edad:
+- Menores: ${menores}
+- Mayores: ${mayores}
+- S/D: ${edadSD}
+
+Procedimiento:
+- Atendidos en el lugar: ${atendidos}
+- Trasladados: ${trasladados}
+
+Dotación:
+- Móviles: ${moviles}
+- Aéreo: ${aereo}
+
+Notas:
+${notas}`;
+
+    return resumen;
+}
+
+// Copiar resumen para área de transferência
+document.getElementById('copySummaryBtn').addEventListener('click', () => {
+    const resumen = generateSummary();
+    navigator.clipboard.writeText(resumen).then(() => {
+        showInfoAlert('Resumen copiado al portapapeles.');
+    }).catch(() => {
+        showAlert('Error al copiar el resumen. Intente manualmente.');
+    });
+});
+
+// Enviar resumen via WhatsApp
+document.getElementById('sendWhatsappBtn').addEventListener('click', () => {
+    const resumen = generateSummary();
+    const encodedMessage = encodeURIComponent(resumen);
+
+    // Número de telefone para enviar (formato internacional, ex: '5491123456789' para Argentina)
+    // Você pode alterar para o número desejado ou deixar vazio para o usuário escolher
+    const phoneNumber = ''; // Exemplo: '5491123456789'
+
+    let whatsappUrl = '';
+    if (phoneNumber) {
+        whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    } else {
+        whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+    }
+
+    window.open(whatsappUrl, '_blank');
+});
+
+document.getElementById('toggleMethaneBtn').addEventListener('click', () => {
+    const methaneSection = document.getElementById('methaneSection');
+    const btn = document.getElementById('toggleMethaneBtn');
+    if (methaneSection.style.display === 'none') {
+        methaneSection.style.display = 'block';
+        btn.textContent = 'Ocultar METHANE';
+    } else {
+        methaneSection.style.display = 'none';
+        btn.textContent = 'Mostrar METHANE';
+    }
+});
+    </script>
+</body>
+</html>
