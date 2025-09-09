@@ -994,7 +994,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Função para gerar o resumo formatado
 function generateSummary() {
-    const methaneFields = [
+const methaneFields = [
         {label: 'M', value: document.getElementById('methaneM').value.trim()},
         {label: 'E', value: document.getElementById('methaneE').value.trim()},
         {label: 'T', value: document.getElementById('methaneT').value.trim()},
@@ -1003,6 +1003,9 @@ function generateSummary() {
         {label: 'N', value: document.getElementById('methaneN').value.trim()},
         {label: 'E', value: document.getElementById('methaneE2').value.trim()}
     ];
+
+const patientText = document.getElementById('patientText').textContent.trim();
+const totalPatients = document.getElementById('totalPatients').textContent.trim();   
 
     // Verifica se algum campo METHANE está preenchido
     const methaneFilled = methaneFields.some(field => field.value !== '');
@@ -1015,8 +1018,6 @@ function generateSummary() {
         });
         methaneResumen += '\n';
     }
-
-    // Os demais campos do resumo continuam iguais, mas substitua a parte METHANE pelo methaneResumen
 
     const incidente = document.getElementById('incidente').value.trim() || 'N/A';
     const direccion = document.getElementById('direccion').value.trim() || 'N/A';
@@ -1048,11 +1049,13 @@ function generateSummary() {
     const aereo = document.getElementById('aereo').textContent;
 
     const resumen = 
-`${methaneResumen}Incidente: ${incidente}
+`${patientText} ${totalPatients} pacientes
+
+${methaneResumen}Incidente: ${incidente}
 Dirección: ${direccion}
 
 Pacientes:
-- Total ${atendidos + trasladados}
+- Total ${parseInt(atendidos) + parseInt(trasladados)}
 
 Sexo:
 - Masculino: ${masculino}
