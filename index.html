@@ -526,6 +526,29 @@
                 <input type="text" class="input-field" id="direccion" placeholder="Dirección del incidente..." />
             </div>
 
+  <!-- Procedimiento -->
+            <div class="section">
+                <div class="section-title">Procedimiento</div>
+                <div class="counter-group">
+                    <div class="counter-item">
+                        <div class="counter-label">Atendidos en el lugar</div>
+                        <div class="counter-controls">
+                            <button class="counter-btn minus" onclick="updatePatientCounter('atendidos', -1)">−</button>
+                            <span class="counter-value" id="atendidos">0</span>
+                            <button class="counter-btn plus" onclick="updatePatientCounter('atendidos', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="counter-item">
+                        <div class="counter-label">Trasladados</div>
+                        <div class="counter-controls">
+                            <button class="counter-btn minus" onclick="updatePatientCounter('trasladados', -1)">−</button>
+                            <span class="counter-value" id="trasladados">0</span>
+                            <button class="counter-btn plus" onclick="updatePatientCounter('trasladados', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Sexo -->
             <div class="section">
                 <div class="section-title">Sexo</div>
@@ -588,30 +611,7 @@
                 </div>
             </div>
 
-            <!-- Procedimiento -->
-            <div class="section">
-                <div class="section-title">Procedimiento</div>
-                <div class="counter-group">
-                    <div class="counter-item">
-                        <div class="counter-label">Atendidos en el lugar</div>
-                        <div class="counter-controls">
-                            <button class="counter-btn minus" onclick="updatePatientCounter('atendidos', -1)">−</button>
-                            <span class="counter-value" id="atendidos">0</span>
-                            <button class="counter-btn plus" onclick="updatePatientCounter('atendidos', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="counter-item">
-                        <div class="counter-label">Trasladados</div>
-                        <div class="counter-controls">
-                            <button class="counter-btn minus" onclick="updatePatientCounter('trasladados', -1)">−</button>
-                            <span class="counter-value" id="trasladados">0</span>
-                            <button class="counter-btn plus" onclick="updatePatientCounter('trasladados', 1)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Dotación -->
+                      <!-- Dotación -->
             <div class="section">
                 <div class="section-title">Dotación</div>
                 <div class="counter-group">
@@ -1052,10 +1052,7 @@ function generateSummary() {
 Dirección: ${direccion}
 
 Pacientes:
-- Total atendidos: ${atendidos}
-- Total trasladados: ${trasladados}
-Destino traslados (hospitales):
-${hospitalesResumen}
+- Total ${atendidos + trasladados}
 
 Sexo:
 - Masculino: ${masculino}
@@ -1070,6 +1067,8 @@ Edad:
 Procedimiento:
 - Atendidos en el lugar: ${atendidos}
 - Trasladados: ${trasladados}
+Destino traslados (hospitales):
+${hospitalesResumen}
 
 Dotación:
 - Móviles: ${moviles}
