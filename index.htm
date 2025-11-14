@@ -248,6 +248,35 @@
         .remove-hospital-btn:hover {
             background: #da190b;
         }
+        
+        .add-obito-btn {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .add-obito-btn:hover {
+            background: #1976D2;
+        }
+
+        .remove-obito-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .remove-obito-btn:hover {
+            background: #da190b;
+        }       
 
         .textarea-field {
             width: 100%;
@@ -548,6 +577,16 @@
                     </div>
                 </div>
             </div>
+<div style="text-align:center; margin-bottom: 15px;">
+    <button id="toggleMethaneBtn" type="button" onclick="addObitoRow()" style="background:#000000; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:bold;">
+        ÓBITO
+    </button>
+
+<div class="section" id="obitosSection" style="display: none;">
+    <div class="section-title">Óbitos</div>
+    <div id="obitosContainer">
+</div>
+</div>
 
             <!-- Sexo -->
             <div class="section">
@@ -962,6 +1001,57 @@
             counterElement.textContent = newValue;
         }
 
+function addObitoRow() {
+    const section = document.getElementById('obitosSection');
+    const container = document.getElementById('obitosContainer');
+    
+    if (section.style.display === 'none') {
+        section.style.display = 'block';
+    }
+      
+    const row = document.createElement('div');
+    row.className = 'obito-row';
+    
+    // Input para números
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.placeholder = '0';
+    input.min = '0';
+    input.value = '0';
+    input.style.width = '60px';
+    input.style.padding = '5px';
+    input.style.marginRight = '10px';
+    input.style.border = '1px solid #ccc';
+    input.style.borderRadius = '4px';
+    input.style.textAlign = 'center';
+    
+    // Botón eliminar
+    const removeBtn = document.createElement('button');
+    removeBtn.textContent = 'Remover';
+    removeBtn.style.background = '#f44336';
+    removeBtn.style.color = 'white';
+    removeBtn.style.border = 'none';
+    removeBtn.style.padding = '8px 12px';
+    removeBtn.style.borderRadius = '5px';
+    removeBtn.style.cursor = 'pointer';
+    removeBtn.style.fontSize = '12px';
+    removeBtn.onclick = function() {
+        container.removeChild(row);
+        // Opcional: Ocultar la sección si no hay filas
+        if (container.children.length === 0) {
+            section.style.display = 'none';
+        }
+    };
+    
+    row.appendChild(input);
+    row.appendChild(removeBtn);
+    container.appendChild(row);
+}
+// Opcional: Agregar una fila inicial
+document.addEventListener('DOMContentLoaded', () => {
+    addObitoRow();
+});
+
         // Botão RESET funcionalidade
         document.getElementById('resetBtn').addEventListener('click', () => {
             if (confirm('Tem certeza que deseja reiniciar todos os dados e começar do zero?')) {
@@ -1056,6 +1146,12 @@ const totalPatients = document.getElementById('totalPatients').textContent.trim(
     const moviles = document.getElementById('moviles').textContent;
     const aereo = document.getElementById('aereo').textContent;
 
+    const obitoInputs = document.querySelectorAll('#obitosContainer input');
+    let obitosTotal = 0;
+    obitoInputs.forEach(input => {
+        obitosTotal += parseInt(input.value) || 0;
+    });
+
     const resumen = 
 `${patientText} ${totalPatients} pacientes
 
@@ -1064,6 +1160,7 @@ Dirección: ${direccion}
 
 Pacientes:
 - Total ${parseInt(atendidos) + parseInt(trasladados)}
+- Óbitos: ${obitosTotal}
 
 Sexo:
 - Masculino: ${masculino}
