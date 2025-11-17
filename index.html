@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.75, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.73, user-scalable=no">
     <title>Contador Digital ECUES</title>
     <style>
         * {
@@ -408,6 +408,22 @@
   font-size: 1em;
 }
 
+        .obito-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .obito-row label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .obito-row input {
+            padding: 5px;
+            width: 60px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -578,13 +594,18 @@
                 </div>
             </div>
 <div style="text-align:center; margin-bottom: 15px;">
-    <button id="toggleMethaneBtn" type="button" onclick="addObitoRow()" style="background:#000000; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:bold;">
-        ÓBITO
-    </button>
+            <button id="toggleObitosBtn" type="button" aria-expanded="false" style="background:#000000; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:bold;">
+                ÓBITOS
+            </button>
+        </div>
 
-<div class="section" id="obitosSection" style="display: none;">
-    <div class="section-title">Óbitos</div>
-    <div id="obitosContainer">
+<div class="section" id="obitosSection" style="display:none;">
+            <div class="section-title">Óbitos</div>
+            <div id="obitosContainer">
+                <div class="obito-row">
+                    <label for="numeroObitos">Número de óbitos:</label>
+                    <input type="number" id="numeroObitos" min="0" value="0" />
+                    </div>
 </div>
 </div>
 
@@ -1001,56 +1022,6 @@
             counterElement.textContent = newValue;
         }
 
-function addObitoRow() {
-    const section = document.getElementById('obitosSection');
-    const container = document.getElementById('obitosContainer');
-    
-    if (section.style.display === 'none') {
-        section.style.display = 'block';
-    }
-      
-    const row = document.createElement('div');
-    row.className = 'obito-row';
-    
-    // Input para números
-    const input = document.createElement('input');
-    input.type = 'number';
-    input.placeholder = '0';
-    input.min = '0';
-    input.value = '0';
-    input.style.width = '60px';
-    input.style.padding = '5px';
-    input.style.marginRight = '10px';
-    input.style.border = '1px solid #ccc';
-    input.style.borderRadius = '4px';
-    input.style.textAlign = 'center';
-    
-    // Botón eliminar
-    const removeBtn = document.createElement('button');
-    removeBtn.textContent = 'Remover';
-    removeBtn.style.background = '#f44336';
-    removeBtn.style.color = 'white';
-    removeBtn.style.border = 'none';
-    removeBtn.style.padding = '8px 12px';
-    removeBtn.style.borderRadius = '5px';
-    removeBtn.style.cursor = 'pointer';
-    removeBtn.style.fontSize = '12px';
-    removeBtn.onclick = function() {
-        container.removeChild(row);
-        // Opcional: Ocultar la sección si no hay filas
-        if (container.children.length === 0) {
-            section.style.display = 'none';
-        }
-    };
-    
-    row.appendChild(input);
-    row.appendChild(removeBtn);
-    container.appendChild(row);
-}
-// Opcional: Agregar una fila inicial
-document.addEventListener('DOMContentLoaded', () => {
-    addObitoRow();
-});
 
         // Botão RESET funcionalidade
         document.getElementById('resetBtn').addEventListener('click', () => {
@@ -1120,7 +1091,7 @@ const totalPatients = document.getElementById('totalPatients').textContent.trim(
     const direccion = document.getElementById('direccion').value.trim() || 'N/A';
     const notas = document.getElementById('notas').value.trim() || 'N/A';
     const intervencion = document.getElementById('intervencion').value.trim() || 'N/A';
-
+    
     const masculino = document.getElementById('masculino').textContent;
     const femenino = document.getElementById('femenino').textContent;
     const sexoSD = document.getElementById('sexoSD').textContent;
@@ -1228,9 +1199,22 @@ document.getElementById('toggleMethaneBtn').addEventListener('click', () => {
         btn.textContent = 'Ocultar METHANE';
     } else {
         methaneSection.style.display = 'none';
-        btn.textContent = 'Mostrar METHANE';
+        btn.textContent = 'METHANE';
     }
 });
+
+        document.getElementById('toggleObitosBtn').addEventListener('click', () => {
+            const obitosSection = document.getElementById('obitosSection');
+            const btn = document.getElementById('toggleObitosBtn');
+            const isHidden = obitosSection.classList.contains('hidden');
+            if (obitosSection.style.display === 'none') {
+                obitosSection.style.display = 'block';
+                btn.textContent = 'Ocultar ÓBITOS';
+            } else {
+                obitosSection.style.display = 'none';
+                btn.textContent = 'ÓBITOS';    
+                        }
+        });
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
