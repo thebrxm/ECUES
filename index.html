@@ -469,6 +469,144 @@
                 bottom: 80px;
             }
         }
+
+                * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+            position: relative;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* MODO NOTURNO */
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .container {
+            background: #2d2d44;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        body.dark-mode .header {
+            background: linear-gradient(135deg, #1e5128, #2d6a4f);
+        }
+
+        body.dark-mode .section {
+            background: #3a3a52;
+            border-left: 5px solid #52b788;
+        }
+
+        body.dark-mode .section-title {
+            color: #74c69d;
+        }
+
+        body.dark-mode .input-field,
+        body.dark-mode .textarea-field,
+        body.dark-mode .hospital-select {
+            background: #2d2d44;
+            color: #e0e0e0;
+            border: 2px solid #4a4a5e;
+        }
+
+        body.dark-mode .input-field:focus,
+        body.dark-mode .textarea-field:focus,
+        body.dark-mode .hospital-select:focus {
+            border-color: #52b788;
+            box-shadow: 0 0 0 3px rgba(82, 183, 136, 0.2);
+        }
+
+        body.dark-mode .counter-item {
+            background: #2d2d44;
+            border: 2px solid #4a4a5e;
+        }
+
+        body.dark-mode .counter-item.highlighted {
+            border-color: #52b788;
+            background: #1e5128;
+        }
+
+        body.dark-mode .counter-label {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .counter-value {
+            color: #74c69d;
+        }
+
+        body.dark-mode .hospital-item {
+            background: #2d2d44;
+            border: 2px solid #4a4a5e;
+        }
+
+        body.dark-mode .alert {
+            background: #ffc107;
+            color: #1a1a2e;
+        }
+
+        body.dark-mode .info-alert {
+            background: #1976d2;
+            color: #e0e0e0;
+        }
+
+        /* Botão Modo Noturno */
+        #darkModeBtn {
+            position: fixed;
+            top: 180px;
+            right: 20px;
+            background: #2d2d44;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(45, 45, 68, 0.6);
+            z-index: 1000;
+            transition: background 0.3s;
+            user-select: none;
+            width: 180px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        #darkModeBtn:hover {
+            background: #3a3a52;
+        }
+
+        body.dark-mode #darkModeBtn {
+            background: #ffc107;
+            color: #1a1a2e;
+        }
+
+        body.dark-mode #darkModeBtn:hover {
+            background: #ffca28;
+        }
+
+        /* Ajustes responsivos */
+        @media (max-width: 768px) {
+            #darkModeBtn {
+                top: auto;
+                bottom: 160px;
+                right: 10px;
+                width: auto;
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+        }
+        
     </style>
 </head>
 <body>
@@ -488,6 +626,17 @@
         </svg>
         Enviar WhatsApp
     </button>
+
+    <button id="darkModeBtn" title="Alternar modo noturno" aria-label="Alternar modo noturno">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="moon-icon">
+            <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="sun-icon" style="display:none;">
+            <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+        </svg>
+        Modo Nocturno
+    </button>
+    
     <div class="container">
         <div class="header">
             <div class="logo">
@@ -1336,6 +1485,37 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+        document.addEventListener("DOMContentLoaded", () => {
+            const darkModeBtn = document.getElementById("darkModeBtn");
+            const moonIcon = darkModeBtn.querySelector(".moon-icon");
+            const sunIcon = darkModeBtn.querySelector(".sun-icon");
+            
+            // Verificar se há preferência salva
+            const savedMode = localStorage.getItem("darkMode");
+            if (savedMode === "enabled") {
+                document.body.classList.add("dark-mode");
+                moonIcon.style.display = "none";
+                sunIcon.style.display = "inline";
+                darkModeBtn.innerHTML = sunIcon.outerHTML + " Modo Claro";
+            }
+
+            darkModeBtn.addEventListener("click", () => {
+                document.body.classList.toggle("dark-mode");
+                
+                if (document.body.classList.contains("dark-mode")) {
+                    localStorage.setItem("darkMode", "enabled");
+                    moonIcon.style.display = "none";
+                    sunIcon.style.display = "inline";
+                    darkModeBtn.innerHTML = sunIcon.outerHTML + " Modo Claro";
+                } else {
+                    localStorage.setItem("darkMode", "disabled");
+                    moonIcon.style.display = "inline";
+                    sunIcon.style.display = "none";
+                    darkModeBtn.innerHTML = moonIcon.outerHTML + " Modo Noturno";
+                }
+            });
+        });
+    
 </script>
 </body>
 </html>
