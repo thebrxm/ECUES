@@ -619,11 +619,24 @@
 }
 
 /* responsivo (mobile) */
-@media (max-width: 768px) {
-    .two-columns {
-        flex-direction: column;
-    }
-}
+ @media (max-width: 768px) {
+            .two-columns {
+                flex-direction: column;
+            }
+
+            .two-columns > .section {
+                width: 100%;
+            }
+
+            .section {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .counter-group {
+                justify-content: center;
+            }
+        }
 
         
     </style>
