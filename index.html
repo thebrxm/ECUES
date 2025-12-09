@@ -665,10 +665,31 @@
     Generar PDF
 </button>
 
-<!-- Botão para mostrar/ocultar METHANE -->
-<div style="text-align:center; margin-bottom: 15px;">
-    <button id="toggleMethaneBtn" type="button" style="background:#4CAF50; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:bold;">
+<div style="
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 15px;
+">
+    <button id="toggleMethaneBtn" type="button"
+        style="background:#4CAF50; color:white; border:none;
+               padding:10px 20px; border-radius:8px;
+               cursor:pointer; font-weight:bold;">
         METHANE
+    </button>
+
+    <button id="toggleObitosBtn" type="button" aria-expanded="false"
+        style="background:#000000; color:white; border:none;
+               padding:10px 20px; border-radius:8px;
+               cursor:pointer; font-weight:bold;">
+        ÓBITOS
+    </button>
+
+    <button id="toggleEvacuadosBtn" type="button"
+        style="background:#FF9800; color:white; border:none;
+               padding:10px 20px; border-radius:8px;
+               cursor:pointer; font-weight:bold;">
+        EVACUADOS
     </button>
 </div>
 
@@ -742,12 +763,8 @@
                     </div>
                 </div>
             </div>
-<div style="text-align:center; margin-bottom: 15px;">
-            <button id="toggleObitosBtn" type="button" aria-expanded="false" style="background:#000000; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:bold;">
-                ÓBITOS
-            </button>
-        </div>
 
+<div>
 <div class="section" id="obitosSection" style="display:none;">
             <div class="section-title">Óbitos</div>
             <div id="obitosContainer">
@@ -755,8 +772,21 @@
                     <label for="numeroObitos">Número de óbitos:</label>
                     <input type="number" id="numeroObitos" min="0" value="0" />
                     </div>
-</div>
-</div>
+                    </div>
+                </div>
+            </div>
+
+<div>
+<div class="section" id="EvacuadosSection" style="display:none;">
+            <div class="section-title">Evacuados</div>
+            <div id="EvacuadosContainer">
+                <div class="obito-row">
+                    <label for="numeroEvacuados">Número de Evacuados:</label>
+                    <input type="number" id="numeroEvacuados" min="0" value="0" />
+                    </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Sexo -->
             <div class="section">
@@ -1271,6 +1301,11 @@ const totalPatients = document.getElementById('totalPatients').textContent.trim(
     obitoInputs.forEach(input => {
         obitosTotal += parseInt(input.value) || 0;
     });
+    const evacuadoInputs = document.querySelectorAll('#evacuadosContainer input');
+    let evacuadosTotal = 0;
+    evacuadoInputs.forEach(input => {
+    evacuadosTotal += parseInt(input.value) || 0;
+});
 
     const resumen = 
 `${methaneResumen}*Incidente: ${incidente}*
@@ -1280,7 +1315,7 @@ const totalPatients = document.getElementById('totalPatients').textContent.trim(
 
 Pacientes:
 - Total ${parseInt(atendidos) + parseInt(trasladados)}
-- Óbitos: ${obitosTotal}
+- Óbitos: ${obitosTotal} | Evacuados: ${evacuadosTotal}
 
 Sexo:
 - Masculino: ${masculino} | Femenino: ${femenino}
@@ -1359,6 +1394,19 @@ document.getElementById('toggleMethaneBtn').addEventListener('click', () => {
             } else {
                 obitosSection.style.display = 'none';
                 btn.textContent = 'ÓBITOS';    
+                        }
+        });
+
+        document.getElementById('toggleEvacuadosBtn').addEventListener('click', () => {
+            const EvacuadosSection = document.getElementById('EvacuadosSection');
+            const btn = document.getElementById('toggleEvacuadosBtn');
+            const isHidden = EvacuadosSection.classList.contains('hidden');
+            if (EvacuadosSection.style.display === 'none') {
+                EvacuadosSection.style.display = 'block';
+                btn.textContent = 'Ocultar EVACUADOS';
+            } else {
+                EvacuadosSection.style.display = 'none';
+                btn.textContent = 'EVACUADOS';    
                         }
         });
 </script>
