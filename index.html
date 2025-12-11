@@ -4,7 +4,6 @@
 
 <link rel="manifest" href="manifest.json" />
 <meta name="theme-color" content="#4CAF50" />
-<link rel="icon" type="image/png" href="icon-192.png">
 
 <link rel="apple-touch-icon" href="icon-192.png" />
 <!-- Permite que o app abra em tela cheia -->
@@ -940,6 +939,7 @@
                                 <option value="HOSPITAL SANTA LUCIA">HOSPITAL SANTA LUCIA</option>
                                 <option value="HOSPITAL GUTIERREZ">HOSPITAL GUTIERREZ</option>
                                 <option value="HOSPITAL ELIZALDE">HOSPITAL ELIZALDE</option>
+                                <option value="OTROS">OTROS</option>
                             </select>
                             <div class="counter-controls">
                                 <button class="counter-btn minus" onclick="updateHospitalCounter(this, -1)">−</button>
@@ -1246,7 +1246,36 @@
 
             counterElement.textContent = newValue;
         }
+// Detectar selección de "OTROS" y mostrar input manual
+document.addEventListener("change", function (e) {
+    if (e.target.classList.contains("hospital-select")) {
 
+        const hospitalItem = e.target.closest(".hospital-item");
+
+        // Verifica si ya existe un input "otro-hospital"
+        let inputOtro = hospitalItem.querySelector(".otro-hospital-input");
+
+        if (e.target.value === "OTROS") {
+
+            // Si no existe, lo crea
+            if (!inputOtro) {
+                inputOtro = document.createElement("input");
+                inputOtro.type = "text";
+                inputOtro.placeholder = "Especificar hospital...";
+                inputOtro.className = "input-field otro-hospital-input";
+                inputOtro.style.marginTop = "10px";
+
+                hospitalItem.querySelector(".hospital-controls").appendChild(inputOtro);
+            }
+
+        } else {
+            // Si cambia a un hospital normal, eliminar input
+            if (inputOtro) {
+                inputOtro.remove();
+            }
+        }
+    }
+});
 
         // Botão RESET funcionalidade
         document.getElementById('resetBtn').addEventListener('click', () => {
@@ -1333,9 +1362,20 @@ const totalPatients = document.getElementById('totalPatients').textContent.trim(
     hospitalItems.forEach(item => {
         const select = item.querySelector('.hospital-select');
         const count = item.querySelector('.counter-value').textContent;
-        if (select.value && parseInt(count) > 0) {
-            hospitalesResumen += `- ${select.value}: ${count}\n`;
-        }
+if (parseInt(count) > 0) {
+
+    let nombre;
+
+    if (select.value === "OTROS") {
+        // Buscar input manual
+        const inputOtro = item.querySelector(".otro-hospital-input");
+        nombre = inputOtro && inputOtro.value.trim() ? inputOtro.value.trim() : "OTROS (sin especificar)";
+    } else {
+        nombre = select.value;
+    }
+
+    hospitalesResumen += `- ${nombre}: ${count}\n`;
+}
     });
     if (!hospitalesResumen) hospitalesResumen = 'Ninguno';
 
