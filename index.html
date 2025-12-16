@@ -1346,6 +1346,17 @@ const totalPatients = document.getElementById('totalPatients').textContent.trim(
     const direccion = document.getElementById('direccion').value.trim() || 'N/A';
     const notas = document.getElementById('notas').value.trim() || 'N/A';
     const intervencion = document.getElementById('intervencion').value.trim() || 'N/A';
+
+// Verifica se algum campo INTERVENCION está preenchido
+const intervencionValue = document.getElementById('intervencion').value.trim();
+
+// Verifica se INTERVENCIÓN está preenchida
+const intervencionFilled = intervencionValue !== '';
+
+let intervencionResumen = '';
+if (intervencionFilled) {
+    intervencionResumen = 'Intervención:\n' + intervencionValue + '\n\n';
+}
     
     const masculino = document.getElementById('masculino').textContent;
     const femenino = document.getElementById('femenino').textContent;
@@ -1419,10 +1430,7 @@ ${hospitalesResumen}
 Dotación:
 - Móviles: ${moviles} | Aéreo: ${aereo}
 
-Intervención:
-${intervencion}
-
-Notas:
+${intervencionResumen}Notas:
 ${notas}`;
 
     return resumen;
