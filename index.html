@@ -1364,7 +1364,6 @@ const totalPatients = document.getElementById('totalPatients').textContent.trim(
         const select = item.querySelector('.hospital-select');
         const count = item.querySelector('.counter-value').textContent;
 if (parseInt(count) > 0) {
-
     let nombre;
 
     if (select.value === "OTROS") {
@@ -1378,7 +1377,7 @@ if (parseInt(count) > 0) {
     hospitalesResumen += `- ${nombre}: ${count}\n`;
 }
     });
-    if (!hospitalesResumen) hospitalesResumen = 'Ninguno';
+    if (!hospitalesResumen) hospitalesResumen = 'S/D';
 
     const moviles = document.getElementById('moviles').textContent;
     const aereo = document.getElementById('aereo').textContent;
@@ -1414,7 +1413,8 @@ Edad:
 Procedimiento:
 - Atendidos en el lugar: ${atendidos}
 - Trasladados: ${trasladados}
-Destino traslados (hospitales): ${hospitalesResumen}
+Destino traslados (hospitales):
+${hospitalesResumen}
 
 Dotación:
 - Móviles: ${moviles} | Aéreo: ${aereo}
@@ -1444,7 +1444,6 @@ document.getElementById('sendWhatsappBtn').addEventListener('click', () => {
     const encodedMessage = encodeURIComponent(resumen);
 
     // Número de telefone para enviar (formato internacional, ex: '5491123456789' para Argentina)
-    // Você pode alterar para o número desejado ou deixar vazio para o usuário escolher
     const phoneNumber = ''; // Exemplo: '5491123456789'
 
     let whatsappUrl = '';
