@@ -1352,7 +1352,7 @@ const notasFilled = notasValue !== '';
 
 let notasResumen = '';
 if (notasFilled) {
-    notasResumen = 'Notas:\n' + notasValue + '\n\n';
+    notasResumen = 'Notas:\n' + notasValue;
 }
     
     const intervencion = document.getElementById('intervencion').value.trim() || 'N/A';
@@ -1365,7 +1365,7 @@ const intervencionFilled = intervencionValue !== '';
 
 let intervencionResumen = '';
 if (intervencionFilled) {
-    intervencionResumen = 'Intervención:\n' + intervencionValue + '\n\n';
+    intervencionResumen = 'Intervención:\n' + intervencionValue;
 }
     
     const masculino = document.getElementById('masculino').textContent;
