@@ -197,6 +197,28 @@
             min-width: 30px;
         }
 
+        .counter-btn.plus10 {
+        width: 35px;
+        height: 35px;
+        background: #1769aa;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        font-size: 11px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 5px;
+        }
+
+.counter-btn.plus10:hover {
+    background: #1976D2;
+    transform: scale(1.1);
+}
+
         .hospital-item {
             background: white;
             border-radius: 10px;
@@ -774,28 +796,30 @@
                 <input type="text" class="input-field" id="direccion" placeholder="Dirección del incidente..." />
             </div>
 
-  <!-- Procedimiento -->
-            <div class="section">
-                <div class="section-title">Procedimiento</div>
-                <div class="counter-group">
-                    <div class="counter-item">
-                        <div class="counter-label">Atendidos en el lugar</div>
-                        <div class="counter-controls">
-                            <button class="counter-btn minus" onclick="updatePatientCounter('atendidos', -1)">−</button>
-                            <span class="counter-value" id="atendidos">0</span>
-                            <button class="counter-btn plus" onclick="updatePatientCounter('atendidos', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="counter-item">
-                        <div class="counter-label">Trasladados</div>
-                        <div class="counter-controls">
-                            <button class="counter-btn minus" onclick="updatePatientCounter('trasladados', -1)">−</button>
-                            <span class="counter-value" id="trasladados">0</span>
-                            <button class="counter-btn plus" onclick="updatePatientCounter('trasladados', 1)">+</button>
-                        </div>
-                    </div>
-                </div>
+            <!-- Procedimiento -->
+<div class="section">
+    <div class="section-title">Procedimiento</div>
+    <div class="counter-group">
+        <div class="counter-item">
+            <div class="counter-label">Atendidos en el lugar</div>
+            <div class="counter-controls">
+                <button class="counter-btn minus" onclick="updatePatientCounter('atendidos', -1)">−</button>
+                <span class="counter-value" id="atendidos">0</span>
+                <button class="counter-btn plus" onclick="updatePatientCounter('atendidos', 1)">+</button>
+                <button class="counter-btn plus10" onclick="quickAdd10('atendidos')">+10</button>
             </div>
+        </div>
+        <div class="counter-item">
+            <div class="counter-label">Trasladados</div>
+            <div class="counter-controls">
+                <button class="counter-btn minus" onclick="updatePatientCounter('trasladados', -1)">−</button>
+                <span class="counter-value" id="trasladados">0</span>
+                <button class="counter-btn plus" onclick="updatePatientCounter('trasladados', 1)">+</button>
+                <button class="counter-btn plus10" onclick="quickAdd10('trasladados')">+10</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div>
 <div class="section" id="obitosSection" style="display:none;">
@@ -823,96 +847,102 @@
 
 <div class="two-columns">
 
-    <!-- Sexo -->
-    <div class="section">
-        <div class="section-title">Sexo</div>
-        <div class="counter-group">
-            <div class="counter-item">
-                <div class="counter-label">Masculino</div>
-                <div class="counter-controls">
-                    <button class="counter-btn minus" onclick="redistributeFromSD('masculino', -1)">−</button>
-                    <span class="counter-value" id="masculino">0</span>
-                    <button class="counter-btn plus" onclick="redistributeFromSD('masculino', 1)">+</button>
-                </div>
-            </div>
+<!-- Sexo -->
+<div class="section">
+    <div class="section-title">Sexo</div>
+    <div class="counter-group">
+        <div class="counter-item">
+    <div class="counter-label">Masculino</div>
+    <div class="counter-controls">
+        <button class="counter-btn minus" onclick="redistributeFromSD('masculino', -1)">−</button>
+        <span class="counter-value" id="masculino">0</span>
+        <button class="counter-btn plus" onclick="redistributeFromSD('masculino', 1)">+</button>
+        <button class="counter-btn plus10" onclick="quickAdd10('masculino')">+10</button>
+    </div>
+</div>
 
-            <div class="counter-item">
-                <div class="counter-label">Femenino</div>
-                <div class="counter-controls">
-                    <button class="counter-btn minus" onclick="redistributeFromSD('femenino', -1)">−</button>
-                    <span class="counter-value" id="femenino">0</span>
-                    <button class="counter-btn plus" onclick="redistributeFromSD('femenino', 1)">+</button>
-                </div>
-            </div>
+<div class="counter-item">
+    <div class="counter-label">Femenino</div>
+    <div class="counter-controls">
+        <button class="counter-btn minus" onclick="redistributeFromSD('femenino', -1)">−</button>
+        <span class="counter-value" id="femenino">0</span>
+        <button class="counter-btn plus" onclick="redistributeFromSD('femenino', 1)">+</button>
+        <button class="counter-btn plus10" onclick="quickAdd10('femenino')">+10</button>
+    </div>
+</div>
 
-            <div class="counter-item" id="sexoSD-item">
-                <div class="counter-label">S/D</div>
-                <div class="counter-controls">
-                    <button class="counter-btn minus" onclick="redistributeToSD('sexoSD', -1)">−</button>
-                    <span class="counter-value" id="sexoSD">0</span>
-                    <button class="counter-btn plus" onclick="redistributeToSD('sexoSD', 1)">+</button>
-                </div>
+        <div class="counter-item" id="sexoSD-item">
+            <div class="counter-label">S/D</div>
+            <div class="counter-controls">
+                <button class="counter-btn minus" onclick="redistributeToSD('sexoSD', -1)">−</button>
+                <span class="counter-value" id="sexoSD">0</span>
+                <button class="counter-btn plus" onclick="redistributeToSD('sexoSD', 1)">+</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Edad -->
-    <div class="section">
-        <div class="section-title">Edad</div>
-        <div class="counter-group">
-            <div class="counter-item">
-                <div class="counter-label">Menores</div>
-                <div class="counter-controls">
-                    <button class="counter-btn minus" onclick="redistributeFromSD('menores', -1)">−</button>
-                    <span class="counter-value" id="menores">0</span>
-                    <button class="counter-btn plus" onclick="redistributeFromSD('menores', 1)">+</button>
-                </div>
-            </div>
+<!-- Edad -->
+<div class="section">
+    <div class="section-title">Edad</div>
+    <div class="counter-group">
+        <div class="counter-item">
+    <div class="counter-label">Menores</div>
+    <div class="counter-controls">
+        <button class="counter-btn minus" onclick="redistributeFromSD('menores', -1)">−</button>
+        <span class="counter-value" id="menores">0</span>
+        <button class="counter-btn plus" onclick="redistributeFromSD('menores', 1)">+</button>
+        <button class="counter-btn plus10" onclick="quickAdd10('menores')">+10</button>
+    </div>
+</div>
 
-            <div class="counter-item">
-                <div class="counter-label">Mayores</div>
-                <div class="counter-controls">
-                    <button class="counter-btn minus" onclick="redistributeFromSD('mayores', -1)">−</button>
-                    <span class="counter-value" id="mayores">0</span>
-                    <button class="counter-btn plus" onclick="redistributeFromSD('mayores', 1)">+</button>
-                </div>
-            </div>
+<div class="counter-item">
+    <div class="counter-label">Mayores</div>
+    <div class="counter-controls">
+        <button class="counter-btn minus" onclick="redistributeFromSD('mayores', -1)">−</button>
+        <span class="counter-value" id="mayores">0</span>
+        <button class="counter-btn plus" onclick="redistributeFromSD('mayores', 1)">+</button>
+        <button class="counter-btn plus10" onclick="quickAdd10('mayores')">+10</button>
+    </div>
+</div>
 
-            <div class="counter-item" id="edadSD-item">
-                <div class="counter-label">S/D</div>
-                <div class="counter-controls">
-                    <button class="counter-btn minus" onclick="redistributeToSD('edadSD', -1)">−</button>
-                    <span class="counter-value" id="edadSD">0</span>
-                    <button class="counter-btn plus" onclick="redistributeToSD('edadSD', 1)">+</button>
-                </div>
+        <div class="counter-item" id="edadSD-item">
+            <div class="counter-label">S/D</div>
+            <div class="counter-controls">
+                <button class="counter-btn minus" onclick="redistributeToSD('edadSD', -1)">−</button>
+                <span class="counter-value" id="edadSD">0</span>
+                <button class="counter-btn plus" onclick="redistributeToSD('edadSD', 1)">+</button>
             </div>
         </div>
     </div>
+</div>
 
 </div>
 
-                      <!-- Dotación -->
-            <div class="section">
-                <div class="section-title">Dotación</div>
-                <div class="counter-group">
-                    <div class="counter-item">
-                        <div class="counter-label">Móviles</div>
-                        <div class="counter-controls">
-                            <button class="counter-btn minus" onclick="updateResourceCounter('moviles', -1)">−</button>
-                            <span class="counter-value" id="moviles">0</span>
-                            <button class="counter-btn plus" onclick="updateResourceCounter('moviles', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="counter-item">
-                        <div class="counter-label">Aéreo</div>
-                        <div class="counter-controls">
-                            <button class="counter-btn minus" onclick="updateResourceCounter('aereo', -1)">−</button>
-                            <span class="counter-value" id="aereo">0</span>
-                            <button class="counter-btn plus" onclick="updateResourceCounter('aereo', 1)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- Dotación -->
+<div class="section">
+    <div class="section-title">Dotación</div>
+    <div class="counter-group">
+        <div class="counter-item">
+    <div class="counter-label">Móviles</div>
+    <div class="counter-controls">
+        <button class="counter-btn minus" onclick="updateResourceCounter('moviles', -1)">−</button>
+        <span class="counter-value" id="moviles">0</span>
+        <button class="counter-btn plus" onclick="updateResourceCounter('moviles', 1)">+</button>
+        <button class="counter-btn plus10" onclick="quickAdd10('moviles')">+10</button>
+    </div>
+</div>
+<div class="counter-item">
+    <div class="counter-label">Aéreo</div>
+    <div class="counter-controls">
+        <button class="counter-btn minus" onclick="updateResourceCounter('aereo', -1)">−</button>
+        <span class="counter-value" id="aereo">0</span>
+        <button class="counter-btn plus" onclick="updateResourceCounter('aereo', 1)">+</button>
+        <button class="counter-btn plus10" onclick="quickAdd10('aereo')">+10</button>
+             </div>
+        </div>
+    </div>
+</div>
 
             <!-- Destino traslados -->
             <div class="section">
@@ -1084,46 +1114,95 @@
         }
 
         // Reseta todas categorias ao zerar total pacientes
-        function resetAllCategories() {
-            // Reset campos METHANE
-            document.getElementById('methaneM').value = '';
-            document.getElementById('methaneE').value = '';
-            document.getElementById('methaneT').value = '';
-            document.getElementById('methaneH').value = '';
-            document.getElementById('methaneA').value = '';
-            document.getElementById('methaneN').value = '';
-            document.getElementById('methaneE2').value = '';
-
-            // Reset contadores de pacientes e S/D
-            document.getElementById('atendidos').textContent = '0';
-            document.getElementById('trasladados').textContent = '0';
-            document.getElementById('masculino').textContent = '0';
-            document.getElementById('femenino').textContent = '0';
-            document.getElementById('sexoSD').textContent = '0';
-            document.getElementById('menores').textContent = '0';
-            document.getElementById('mayores').textContent = '0';
-            document.getElementById('edadSD').textContent = '0';
-
-            // Reset contadores de recursos
-            document.getElementById('moviles').textContent = '0';
-            document.getElementById('aereo').textContent = '0';
-
-            // Reset contadores dos hospitais e seleção
-            document.querySelectorAll('#hospitalsContainer .hospital-item').forEach(hospitalItem => {
-                hospitalItem.querySelector('.hospital-select').value = '';
-                hospitalItem.querySelector('.counter-value').textContent = '0';
-            });
-
-            // Reset inputs texto
-            document.getElementById('incidente').value = '';
-            document.getElementById('direccion').value = '';
-            document.getElementById('notas').value = '';
-            document.getElementById('intervencion').value = '';
-
-            // Esconder alertas
-            document.getElementById('alert').style.display = 'none';
-            document.getElementById('infoAlert').style.display = 'none';
+function resetAllCategories() {
+    // Reset variável global
+    totalPacientes = 0;
+    
+    // Reset campos METHANE
+    document.getElementById('methaneM').value = '';
+    document.getElementById('methaneE').value = '';
+    document.getElementById('methaneT').value = '';
+    document.getElementById('methaneH').value = '';
+    document.getElementById('methaneA').value = '';
+    document.getElementById('methaneN').value = '';
+    document.getElementById('methaneE2').value = '';
+    
+    // Reset contadores de pacientes e S/D
+    document.getElementById('atendidos').textContent = '0';
+    document.getElementById('trasladados').textContent = '0';
+    document.getElementById('masculino').textContent = '0';
+    document.getElementById('femenino').textContent = '0';
+    document.getElementById('sexoSD').textContent = '0';
+    document.getElementById('menores').textContent = '0';
+    document.getElementById('mayores').textContent = '0';
+    document.getElementById('edadSD').textContent = '0';
+    
+    // Reset contadores de recursos
+    document.getElementById('moviles').textContent = '0';
+    document.getElementById('aereo').textContent = '0';
+    
+    // RESET ÓBITOS E EVACUADOS
+    const numeroObitosInput = document.getElementById('numeroObitos');
+    const numeroEvacuadosInput = document.getElementById('numeroEvacuados');
+    
+    if (numeroObitosInput) {
+        numeroObitosInput.value = '0';
+    }
+    
+    if (numeroEvacuadosInput) {
+        numeroEvacuadosInput.value = '0';
+    }
+    
+    // Reset container de óbitos (se existir)
+    const obitosContainer = document.getElementById('obitosContainer');
+    if (obitosContainer) {
+        obitosContainer.innerHTML = `
+            <div class="obito-row">
+                <label>Óbitos:</label>
+                <input type="number" id="numeroObitos" min="0" value="0" style="width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 5px;">
+            </div>
+        `;
+    }
+    
+    // Reset container de evacuados (se existir)
+    const evacuadosContainer = document.getElementById('evacuadosContainer');
+    if (evacuadosContainer) {
+        evacuadosContainer.innerHTML = `
+            <div class="obito-row">
+                <label>Evacuados:</label>
+                <input type="number" id="numeroEvacuados" min="0" value="0" style="width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 5px;">
+            </div>
+        `;
+    }
+    
+    // Reset contadores dos hospitais
+    document.querySelectorAll('#hospitalsContainer .hospital-item').forEach(hospitalItem => {
+        hospitalItem.querySelector('.hospital-select').value = '';
+        hospitalItem.querySelector('.counter-value').textContent = '0';
+        
+        // Remover input "OTROS" se existir
+        const inputOtro = hospitalItem.querySelector('.otro-hospital-input');
+        if (inputOtro) {
+            inputOtro.remove();
         }
+    });
+    
+    // Reset inputs texto
+    document.getElementById('incidente').value = '';
+    document.getElementById('direccion').value = '';
+    document.getElementById('notas').value = '';
+    document.getElementById('intervencion').value = '';
+    
+    // Atualizar total de pacientes
+    updateTotalPatients();
+    
+    // Esconder alertas
+    document.getElementById('alert').style.display = 'none';
+    document.getElementById('infoAlert').style.display = 'none';
+    
+    // Mensagem de confirmação
+    showInfoAlert('✅ Todos los datos han sido reseteados correctamente.');
+}
 
         // Valida que os totais das categorias coincidam
         function validateCategoryTotals() {
@@ -1286,6 +1365,28 @@ document.addEventListener("change", function (e) {
                 showInfoAlert('Aplicación reiniciada.');
             }
         });
+
+// Função para adicionar +10 rapidamente
+function quickAdd10(counterId) {
+    // Para pacientes (atendidos/trasladados)
+    if (counterId === 'atendidos' || counterId === 'trasladados') {
+        for (let i = 0; i < 10; i++) {
+            updatePatientCounter(counterId, 1);
+        }
+    }
+    // Para recursos (móviles/aéreo)
+    else if (counterId === 'moviles' || counterId === 'aereo') {
+        for (let i = 0; i < 10; i++) {
+            updateResourceCounter(counterId, 1);
+        }
+    }
+    // Para categorias de redistribuição (sexo/edad)
+    else {
+        for (let i = 0; i < 10; i++) {
+            redistributeFromSD(counterId, 1);
+        }
+    }
+}
 
         // Inicializar a aplicação
 document.addEventListener("DOMContentLoaded", function () {
