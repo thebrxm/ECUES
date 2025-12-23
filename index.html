@@ -1524,7 +1524,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Função para gerar o resumo formatado
 function generateSummary() {
-const methaneFields = [
+    const methaneFields = [
         {label: 'M', value: document.getElementById('methaneM').value.trim()},
         {label: 'E', value: document.getElementById('methaneE').value.trim()},
         {label: 'T', value: document.getElementById('methaneT').value.trim()},
@@ -1534,8 +1534,8 @@ const methaneFields = [
         {label: 'E', value: document.getElementById('methaneE2').value.trim()}
     ];
 
-const patientText = document.getElementById('patientText').textContent.trim();
-const totalPatients = document.getElementById('totalPatients').textContent.trim();   
+    const patientText = document.getElementById('patientText').textContent.trim();
+    const totalPatients = document.getElementById('totalPatients').textContent.trim();   
 
     // Verifica se algum campo METHANE está preenchido
     const methaneFilled = methaneFields.some(field => field.value !== '');
@@ -1552,28 +1552,28 @@ const totalPatients = document.getElementById('totalPatients').textContent.trim(
     const incidente = document.getElementById('incidente').value.trim() || 'N/A';
     const direccion = document.getElementById('direccion').value.trim() || 'N/A';
     const notas = document.getElementById('notas').value.trim() || 'N/A';
-const notasValue = document.getElementById('notas').value.trim();
+    const notasValue = document.getElementById('notas').value.trim();
 
-// Verifica se NOTAS está preenchida
-const notasFilled = notasValue !== '';
+    // Verifica se NOTAS está preenchida
+    const notasFilled = notasValue !== '';
 
-let notasResumen = '';
-if (notasFilled) {
-    notasResumen = 'Notas:\n' + notasValue;
-}
+    let notasResumen = '';
+    if (notasFilled) {
+        notasResumen = 'Notas:\n' + notasValue;
+    }
     
     const intervencion = document.getElementById('intervencion').value.trim() || 'N/A';
 
-// Verifica se algum campo INTERVENCION está preenchido
-const intervencionValue = document.getElementById('intervencion').value.trim();
+    // Verifica se algum campo INTERVENCION está preenchido
+    const intervencionValue = document.getElementById('intervencion').value.trim();
 
-// Verifica se INTERVENCIÓN está preenchida
-const intervencionFilled = intervencionValue !== '';
+    // Verifica se INTERVENCIÓN está preenchida
+    const intervencionFilled = intervencionValue !== '';
 
-let intervencionResumen = '';
-if (intervencionFilled) {
-    intervencionResumen = 'Intervención:\n' + intervencionValue;
-}
+    let intervencionResumen = '';
+    if (intervencionFilled) {
+        intervencionResumen = 'Intervención:\n' + intervencionValue;
+    }
     
     const masculino = document.getElementById('masculino').textContent;
     const femenino = document.getElementById('femenino').textContent;
@@ -1591,19 +1591,19 @@ if (intervencionFilled) {
     hospitalItems.forEach(item => {
         const select = item.querySelector('.hospital-select');
         const count = item.querySelector('.counter-value').textContent;
-if (parseInt(count) > 0) {
-    let nombre;
+        if (parseInt(count) > 0) {
+            let nombre;
 
-    if (select.value === "OTROS") {
-        // Buscar input manual
-        const inputOtro = item.querySelector(".otro-hospital-input");
-        nombre = inputOtro && inputOtro.value.trim() ? inputOtro.value.trim() : "OTROS (sin especificar)";
-    } else {
-        nombre = select.value;
-    }
+            if (select.value === "OTROS") {
+                // Buscar input manual
+                const inputOtro = item.querySelector(".otro-hospital-input");
+                nombre = inputOtro && inputOtro.value.trim() ? inputOtro.value.trim() : "OTROS (sin especificar)";
+            } else {
+                nombre = select.value;
+            }
 
-    hospitalesResumen += `- ${nombre}: ${count}\n`;
-}
+            hospitalesResumen += `- ${nombre}: ${count}\n`;
+        }
     });
     if (!hospitalesResumen) hospitalesResumen = 'S/D';
 
@@ -1618,17 +1618,32 @@ if (parseInt(count) > 0) {
     const evacuadosInputs = document.querySelectorAll('#EvacuadosContainer input');
     let evacuadosTotal = 0;
     evacuadosInputs.forEach(input => {
-    evacuadosTotal += parseInt(input.value) || 0;
-});
+        evacuadosTotal += parseInt(input.value) || 0;
+    });
+
+    // Construir Información General
+    const infoGeneral = `Información General:
+Pacientes: ${parseInt(atendidos) + parseInt(trasladados)}`;
+
+    // Construir Información Adicional dinámicamente (solo si hay datos)
+    let infoAdicional = 'Información Adicional:\n';
+    if (obitosTotal > 0) {
+        infoAdicional += `- *Óbitos: ${obitosTotal}*\n`;
+    }
+    if (evacuadosTotal > 0) {
+        infoAdicional += `- Evacuados: ${evacuadosTotal}\n`;
+    }
+    if (infoAdicional === 'Información Adicional:\n') {
+        infoAdicional = ''; // Si no hay nada, no mostrar la sección
+    } else {
+        infoAdicional += '\n'; // Agregar línea en blanco si hay contenido
+    }
 
     const resumen = 
 `${methaneResumen}*Incidente: ${incidente}*
 *Dirección: ${direccion}*
 
 *${patientText} ${totalPatients} pacientes*
-
-Información General:
-Pacientes: ${parseInt(atendidos) + parseInt(trasladados)}
 
 Sexo:
 - Mas: ${masculino} | Fem: ${femenino} | S/D: ${sexoSD}
@@ -1645,11 +1660,9 @@ ${hospitalesResumen}
 Dotación:
 - Móviles: ${moviles} | Aéreo: ${aereo}
 
-Información Adicional:
-- Óbitos: ${obitosTotal}
-- Evacuados: ${evacuadosTotal}
+${infoAdicional}${intervencionResumen}
 
-${intervencionResumen}${notasResumen}`;
+${notasResumen}`;
     return resumen;
 }
 
