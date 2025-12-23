@@ -1628,9 +1628,7 @@ if (parseInt(count) > 0) {
 *${patientText} ${totalPatients} pacientes*
 
 Información General:
-- Pacientes: ${parseInt(atendidos) + parseInt(trasladados)}
-- Óbitos: ${obitosTotal}
-- Evacuados: ${evacuadosTotal}
+Pacientes: ${parseInt(atendidos) + parseInt(trasladados)}
 
 Sexo:
 - Mas: ${masculino} | Fem: ${femenino} | S/D: ${sexoSD}
@@ -1646,6 +1644,10 @@ ${hospitalesResumen}
 
 Dotación:
 - Móviles: ${moviles} | Aéreo: ${aereo}
+
+Información Adicional:
+- Óbitos: ${obitosTotal}
+- Evacuados: ${evacuadosTotal}
 
 ${intervencionResumen}${notasResumen}`;
     return resumen;
