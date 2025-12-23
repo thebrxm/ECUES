@@ -342,6 +342,7 @@
         }
 
 /* Botões modernos circulares */
+/* ========== BOTÕES FLUTUANTES FIXOS ========== */
 .action-btn {
     position: fixed;
     right: 20px;
@@ -357,60 +358,68 @@
     align-items: center;
     justify-content: center;
     color: white;
-    background: #2196F3; /* cor padrão azul */
-  }
+    background: #2196F3;
+}
 
-  .action-btn:hover {
+.action-btn:hover {
     transform: scale(1.1);
     box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-  }
+}
 
-  .action-btn svg {
+.action-btn svg {
     width: 24px;
     height: 24px;
     fill: currentColor;
     pointer-events: none;
-  }
+}
 
-  /* Botões específicos com cores */
-  #resetBtn {
+/* Posicionamento vertical fixo - espaçamento de 70px entre botões */
+#resetBtn {
     top: 20px;
     background: #f44336;
-  }
-  #resetBtn:hover { background: #da190b; }
+}
+#resetBtn:hover { 
+    background: #da190b; 
+}
 
-  #copySummaryBtn {
-    top: 90px;
-    background: #2196F3;
-  }
-  #copySummaryBtn:hover { background: #1976D2; }
-
-  #sendWhatsappBtn {
-    top: 160px;
-    background: #25D366;
-  }
-  #sendWhatsappBtn:hover { background: #1ea952; }
-
-  #darkModeBtn {
-    top: 230px;
+#darkModeBtn {
+    top: 90px;  /* 20 + 70 */
     background: #424242;
-  }
-  #darkModeBtn:hover {
+}
+#darkModeBtn:hover {
     background: #616161;
-  }
-  body.dark-mode #darkModeBtn {
+}
+body.dark-mode #darkModeBtn {
     background: #FFC107;
     color: #333;
-  }
-  body.dark-mode #darkModeBtn:hover {
+}
+body.dark-mode #darkModeBtn:hover {
     background: #ffca28;
-  }
+}
 
-  #generatePdfBtn {
-    top: 300px;
+#copySummaryBtn {
+    top: 160px;  /* 90 + 70 */
+    background: #2196F3;
+}
+#copySummaryBtn:hover { 
+    background: #1976D2; 
+}
+
+#sendWhatsappBtn {
+    top: 230px;  /* 160 + 70 */
+    background: #25D366;
+}
+#sendWhatsappBtn:hover { 
+    background: #1ea952; 
+}
+
+#generatePdfBtn {
+    top: 300px;  /* 230 + 70 */
     background: #FF9800;
-  }
-  #generatePdfBtn:hover { background: #f50000; }
+}
+#generatePdfBtn:hover { 
+    background: #FB8C00; 
+}
 
   /* Ícones do modo nocturno (lua / sol) */
   #darkModeBtn .moon-icon {
@@ -707,6 +716,46 @@ body.dark-mode .container-verde {
                 justify-content: center;
             }
         }
+
+@media (max-width: 768px) {
+    /* Ajusta posição dos botões em telas pequenas */
+    .action-btn {
+        right: 10px;
+        width: 48px;
+        height: 48px;
+    }
+    
+    .action-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    /* Reduz espaçamento vertical em mobile */
+    #resetBtn {
+        top: 10px;
+    }
+    
+    #darkModeBtn {
+        top: 68px;  /* 10 + 58 */
+    }
+    
+    #copySummaryBtn {
+        top: 126px;  /* 68 + 58 */
+    }
+    
+    #sendWhatsappBtn {
+        top: 184px;  /* 126 + 58 */
+    }
+    
+    #generatePdfBtn {
+        top: 242px;  /* 184 + 58 */
+    }
+    
+    /* Esconde tooltip em mobile */
+    .action-btn:hover::after {
+        display: none;
+    }
+}
 
         
     </style>
