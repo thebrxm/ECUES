@@ -219,6 +219,28 @@
     transform: scale(1.1);
 }
 
+        .counter-btn.minus10 {
+        width: 35px;
+        height: 35px;
+        background: #1769aa;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        font-size: 11px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 5px;
+        }
+
+.counter-btn.minus10:hover {
+    background: #1976D2;
+    transform: scale(1.1);
+}
+
         .hospital-item {
             background: white;
             border-radius: 10px;
@@ -909,6 +931,7 @@ body.dark-mode .container-verde {
         <div class="counter-item">
             <div class="counter-label">Atendidos en el lugar</div>
             <div class="counter-controls">
+                <button class="counter-btn minus10" onclick="quickSub10('atendidos')">-10</button>
                 <button class="counter-btn minus" onclick="updatePatientCounter('atendidos', -1)">−</button>
                 <span class="counter-value" id="atendidos">0</span>
                 <button class="counter-btn plus" onclick="updatePatientCounter('atendidos', 1)">+</button>
@@ -918,6 +941,7 @@ body.dark-mode .container-verde {
         <div class="counter-item">
             <div class="counter-label">Trasladados</div>
             <div class="counter-controls">
+                <button class="counter-btn minus10" onclick="quickSub10('trasladados')">-10</button>
                 <button class="counter-btn minus" onclick="updatePatientCounter('trasladados', -1)">−</button>
                 <span class="counter-value" id="trasladados">0</span>
                 <button class="counter-btn plus" onclick="updatePatientCounter('trasladados', 1)">+</button>
@@ -960,6 +984,7 @@ body.dark-mode .container-verde {
         <div class="counter-item">
     <div class="counter-label">Masculino</div>
     <div class="counter-controls">
+        <button class="counter-btn minus10" onclick="quickSub10('masculino')">-10</button>
         <button class="counter-btn minus" onclick="redistributeFromSD('masculino', -1)">−</button>
         <span class="counter-value" id="masculino">0</span>
         <button class="counter-btn plus" onclick="redistributeFromSD('masculino', 1)">+</button>
@@ -970,6 +995,7 @@ body.dark-mode .container-verde {
 <div class="counter-item">
     <div class="counter-label">Femenino</div>
     <div class="counter-controls">
+        <button class="counter-btn minus10" onclick="quickSub10('femenino')">-10</button>
         <button class="counter-btn minus" onclick="redistributeFromSD('femenino', -1)">−</button>
         <span class="counter-value" id="femenino">0</span>
         <button class="counter-btn plus" onclick="redistributeFromSD('femenino', 1)">+</button>
@@ -995,6 +1021,7 @@ body.dark-mode .container-verde {
         <div class="counter-item">
     <div class="counter-label">Menores</div>
     <div class="counter-controls">
+        <button class="counter-btn minus10" onclick="quickSub10('menores')">-10</button>
         <button class="counter-btn minus" onclick="redistributeFromSD('menores', -1)">−</button>
         <span class="counter-value" id="menores">0</span>
         <button class="counter-btn plus" onclick="redistributeFromSD('menores', 1)">+</button>
@@ -1005,6 +1032,7 @@ body.dark-mode .container-verde {
 <div class="counter-item">
     <div class="counter-label">Mayores</div>
     <div class="counter-controls">
+        <button class="counter-btn minus10" onclick="quickSub10('mayores')">-10</button>
         <button class="counter-btn minus" onclick="redistributeFromSD('mayores', -1)">−</button>
         <span class="counter-value" id="mayores">0</span>
         <button class="counter-btn plus" onclick="redistributeFromSD('mayores', 1)">+</button>
@@ -1032,6 +1060,7 @@ body.dark-mode .container-verde {
         <div class="counter-item">
     <div class="counter-label">Móviles</div>
     <div class="counter-controls">
+        <button class="counter-btn minus10" onclick="quickSub10('moviles')">-10</button>
         <button class="counter-btn minus" onclick="updateResourceCounter('moviles', -1)">−</button>
         <span class="counter-value" id="moviles">0</span>
         <button class="counter-btn plus" onclick="updateResourceCounter('moviles', 1)">+</button>
@@ -1041,6 +1070,7 @@ body.dark-mode .container-verde {
 <div class="counter-item">
     <div class="counter-label">Aéreo</div>
     <div class="counter-controls">
+        <button class="counter-btn minus10" onclick="quickSub10('aereo')">-10</button>
         <button class="counter-btn minus" onclick="updateResourceCounter('aereo', -1)">−</button>
         <span class="counter-value" id="aereo">0</span>
         <button class="counter-btn plus" onclick="updateResourceCounter('aereo', 1)">+</button>
@@ -1490,6 +1520,28 @@ function quickAdd10(counterId) {
     else {
         for (let i = 0; i < 10; i++) {
             redistributeFromSD(counterId, 1);
+        }
+    }
+}
+
+// Função para subtrair -10 rapidamente
+function quickSub10(counterId) {
+    // Para pacientes (atendidos/trasladados)
+    if (counterId === 'atendidos' || counterId === 'trasladados') {
+        for (let i = 0; i < 10; i++) {
+            updatePatientCounter(counterId, -1);
+        }
+    }
+    // Para recursos (móviles/aéreo)
+    else if (counterId === 'moviles' || counterId === 'aereo') {
+        for (let i = 0; i < 10; i++) {
+            updateResourceCounter(counterId, -1);
+        }
+    }
+    // Para categorias de redistribuição (sexo/edad)
+    else {
+        for (let i = 0; i < 10; i++) {
+            redistributeFromSD(counterId, -1);
         }
     }
 }
