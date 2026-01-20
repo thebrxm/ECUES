@@ -785,6 +785,50 @@ body.dark-mode .container-verde {
     }
 }
 
+.counter-controls button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 14px;
+}
+
+.category-switch {
+  display: flex;
+  background: #e9edf3;
+  border-radius: 18px;
+  padding: 4px;
+  margin: 12px auto 15px;
+  max-width: 380px;
+}
+
+.cat-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px 0;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* botão ativo */
+.cat-btn.active {
+  background: white;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  color: #000;
+}
+
+/* feedback de toque */
+.cat-btn:active {
+  transform: scale(0.96);
+}
+
+#toggleMethaneBtn.active { color: #2E7D32; }
+#toggleObitosBtn.active { color: #B71C1C; }
+#toggleEvacuadosBtn.active { color: #1565C0; }
         
     </style>
 </head>
@@ -854,32 +898,18 @@ body.dark-mode .container-verde {
     </svg>
 </button>
 
-<div style="
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 15px;
-">
-    <button id="toggleMethaneBtn" type="button"
-        style="background:#4CAF50; color:white; border:none;
-               padding:10px 20px; border-radius:8px;
-               cursor:pointer; font-weight:bold;">
-        METHANE
-    </button>
+<div class="category-switch">
+  <button id="toggleMethaneBtn" class="cat-btn active" type="button">
+    METHANE
+  </button>
 
-    <button id="toggleObitosBtn" type="button" aria-expanded="false"
-        style="background:#000000; color:white; border:none;
-               padding:10px 20px; border-radius:8px;
-               cursor:pointer; font-weight:bold;">
-        ÓBITOS
-    </button>
+  <button id="toggleObitosBtn" class="cat-btn" type="button">
+    ÓBITOS
+  </button>
 
-    <button id="toggleEvacuadosBtn" type="button"
-        style="background:#FF9800; color:white; border:none;
-               padding:10px 20px; border-radius:8px;
-               cursor:pointer; font-weight:bold;">
-        EVACUADOS
-    </button>
+  <button id="toggleEvacuadosBtn" class="cat-btn" type="button">
+    EVACUADOS
+  </button>
 </div>
 
 <!-- METHANE oculto inicialmente -->
@@ -1933,6 +1963,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+function setActiveCategory(activeBtn) {
+  document.querySelectorAll(".cat-btn").forEach(btn => {
+    btn.classList.remove("active");
+  });
+  activeBtn.classList.add("active");
+}
+
+document.getElementById("toggleMethaneBtn").onclick = function () {
+  setActiveCategory(this);
+};
+
+document.getElementById("toggleObitosBtn").onclick = function () {
+  setActiveCategory(this);
+};
+
+document.getElementById("toggleEvacuadosBtn").onclick = function () {
+  setActiveCategory(this);
+};
     
 </script>
 </body>
